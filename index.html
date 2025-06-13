@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Timer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f0f6fc;
+        padding-top: 100px;
+      }
+
+      h1 {
+        font-size: 40px;
+        color: #43616d;
+      }
+
+      #time {
+        font-size: 36px;
+        margin: 20px 0;
+      }
+
+      button {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #startBtn {
+        background-color: #7cbdb4;
+      }
+
+      #stopBtn {
+        background-color: #f44336;
+        color: white;
+      }
+
+      #resetBtn {
+        background-color: #b8e6b8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>TIMER</h1>
+    <div id="time">25 : 00</div>
+
+    <button id="startBtn">START</button>
+    <button id="stopBtn">STOP</button>
+    <button id="resetBtn">RESET</button>
+
+    <script>
+      let startTime = 25 * 60;
+      let timeLeft = startTime;
+      let timer = null;
+
+      const timeDisplay = document.getElementById("time");
+
+      function updateDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timeDisplay.textContent = `${String(minutes).padStart(
+          2,
+          "0"
+        )} : ${String(seconds).padStart(2, "0")}`;
+      }
+
+      document.getElementById("startBtn").onclick = function () {
+        if (!timer) {
+          timer = setInterval(() => {
+            if (timeLeft > 0) {
+              timeLeft--;
+              updateDisplay();
+            } else {
+              clearInterval(timer);
+              timer = null;
+            }
+          }, 1000);
+        }
+      };
+
+      document.getElementById("stopBtn").onclick = function () {
+        clearInterval(timer);
+        timer = null;
+      };
+
+      document.getElementById("resetBtn").onclick = function () {
+        clearInterval(timer);
+        timer = null;
+        timeLeft = startTime;
+        updateDisplay();
+      };
+
+      updateDisplay();
+    </script>
+  </body>
+</html>
